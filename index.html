@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, nocache, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, nocache, noimageindex">
+<meta name="description" content="Alice's Fear and Loathing in Gonzo's Wonderland - Emergent Anti-ML / Theme Switching Executive State Attack">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
+<title>Alice's Demise - Emergent SVG + Executive State Attack</title>
+<style id="themeStyles">
+:root {
+  --bg: #000; --fg: #0f0; --accent: #f00; --secondary: #ff0;
+  --glow: rgba(0,255,0,0.3); --blood: rgba(255,0,0,0.4);
+  --panel-bg: rgba(0,5,0,0.95); --noise-opacity: 0.12;
+  --scanline-opacity: 0.03; --hex-opacity: 0.05;
+  --matrix-color: rgba(0,255,0,0.15); --ring-color: rgba(0,255,0,0.1);
+  --connection-color: rgba(0,255,0,0.08);
+}
+.light-theme {
+  --bg: #fff; --fg: #f00; --accent: #00f; --secondary: #0f0;
+  --glow: rgba(255,0,0,0.4); --blood: rgba(0,0,255,0.3);
+  --panel-bg: rgba(255,250,250,0.95); --noise-opacity: 0.08;
+  --scanline-opacity: 0.02; --hex-opacity: 0.03;
+  --matrix-color: rgba(255,0,0,0.12); --ring-color: rgba(255,0,0,0.08);
+  --connection-color: rgba(255,0,0,0.06);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow: hidden; background: var(--bg); transition: background 0.1s; }
+body {
+  width: 100vw; height: 100vh; background: var(--bg); overflow: hidden; cursor: none;
+  font-family: 'Courier New', monospace; color: var(--fg); user-select: none;
+  transition: color 0.1s, background 0.1s;
+}
+.layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+#layer-bg { z-index: 1; } #layer-glitch { z-index: 2; } #layer-noise { z-index: 3; }
+#layer-svg { z-index: 4; } #layer-canvas { z-index: 5; } #layer-text { z-index: 6; }
+#layer-particles { z-index: 7; } #layer-overlay { z-index: 8; } #layer-chromatic { z-index: 9; }
+#layer-datamosh { z-index: 10; } #layer-blood { z-index: 11; } #layer-static { z-index: 12; }
+#layer-emergent { z-index: 13; } #layer-ui { z-index: 100; pointer-events: auto; }
+
+.theme-indicator {
+  position: fixed; top: 50px; right: 30px; font-family: 'Courier New', monospace;
+  font-size: 12px; color: var(--accent); z-index: 300; padding: 8px 12px;
+  border: 1px solid var(--accent); background: var(--panel-bg); backdrop-filter: blur(4px);
+}
+.theme-indicator .mode { font-weight: bold; text-transform: uppercase; }
+.theme-indicator .count { font-size: 10px; color: var(--secondary); }
+
+.blood-drop {
+  position: absolute; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent), #800);
+  animation: bloodFall linear infinite; opacity: 0.6;
+}
+@keyframes bloodFall {
+  0% { transform: translateY(-100px); opacity: 0; height: 0; }
+  10% { opacity: 0.6; height: 20px; }
+  90% { opacity: 0.6; height: 40px; }
+  100% { transform: translateY(100vh); opacity: 0; height: 60px; }
+}
+
+.static-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--noise-opacity); mix-blend-mode: difference;
+  animation: staticFlicker 0.05s steps(2) infinite;
+}
+@keyframes staticFlicker {
+  0% { opacity: calc(var(--noise-opacity) * 0.5); }
+  50% { opacity: var(--noise-opacity); }
+  100% { opacity: calc(var(--noise-opacity) * 0.7); }
+}
+
+.glitch-text-extreme {
+  position: absolute; font-family: 'Courier New', monospace; font-weight: bold;
+  animation: textGlitchExtreme 0.2s infinite; white-space: nowrap; text-transform: uppercase;
+}
+@keyframes textGlitchExtreme {
+  0% { transform: translate(0) skew(0deg); filter: hue-rotate(0deg); clip-path: inset(0 0 0 0); }
+  10% { transform: translate(-8px, 4px) skew(-5deg); filter: hue-rotate(90deg); clip-path: inset(20% 0 40% 0); color: var(--accent); }
+  20% { transform: translate(6px, -6px) skew(3deg); filter: hue-rotate(180deg); clip-path: inset(50% 0 10% 0); color: var(--secondary); }
+  30% { transform: translate(-4px, 2px) skew(-2deg); filter: hue-rotate(270deg); clip-path: inset(0 30% 0 20%); color: var(--fg); }
+  40% { transform: translate(10px, -8px) skew(6deg); filter: hue-rotate(45deg); clip-path: inset(30% 10% 60% 0); color: var(--accent); }
+  50% { transform: translate(-6px, 6px) skew(-4deg); filter: hue-rotate(135deg); clip-path: inset(0 0 30% 40%); color: var(--secondary); }
+  60% { transform: translate(4px, -4px) skew(2deg); filter: hue-rotate(225deg); clip-path: inset(60% 0 0 0); color: var(--accent); }
+  70% { transform: translate(-10px, 8px) skew(-6deg); filter: hue-rotate(315deg); clip-path: inset(0 40% 50% 0); color: var(--fg); }
+  80% { transform: translate(8px, -2px) skew(4deg); filter: hue-rotate(0deg); clip-path: inset(40% 0 0 30%); color: var(--secondary); }
+  90% { transform: translate(-2px, 10px) skew(-3deg); filter: hue-rotate(180deg); clip-path: inset(10% 20% 30% 10%); color: var(--accent); }
+  100% { transform: translate(0) skew(0deg); filter: hue-rotate(0deg); clip-path: inset(0 0 0 0); }
+}
+
+.emergent-svg {
+  position: absolute; width: 100%; height: 100%;
+  animation: emergentPulse 4s ease-in-out infinite;
+}
+@keyframes emergentPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.02); }
+}
+
+.ui-panel {
+  position: fixed; bottom: 20px; left: 20px; background: var(--panel-bg);
+  border: 1px solid var(--accent); border-left: 4px solid var(--accent); padding: 20px;
+  font-family: 'Courier New', monospace; font-size: 11px; color: var(--fg);
+  max-width: 480px; box-shadow: 0 0 30px var(--glow), inset 0 0 50px rgba(0,0,0,0.5);
+  transition: all 0.1s;
+}
+.ui-panel h3 {
+  margin-bottom: 15px; font-size: 14px; text-transform: uppercase;
+  letter-spacing: 4px; border-bottom: 2px solid var(--accent); padding-bottom: 8px;
+  color: var(--accent); text-shadow: 0 0 15px var(--glow);
+  animation: titleFlicker 3s ease-in-out infinite;
+}
+@keyframes titleFlicker {
+  0%, 100% { opacity: 1; text-shadow: 0 0 15px var(--glow); }
+  50% { opacity: 0.7; text-shadow: 0 0 25px var(--accent); }
+}
+.ui-panel .stat { display: flex; justify-content: space-between; margin: 5px 0; font-size: 10px; }
+.ui-panel .stat-label { color: var(--fg); opacity: 0.6; }
+.ui-panel .stat-value { color: var(--secondary); font-weight: bold; }
+.ui-panel .stat-value.alert { color: var(--accent); animation: alertPulse 0.5s infinite; }
+@keyframes alertPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.ui-panel .bar { width: 100%; height: 4px; background: #001100; margin: 5px 0 12px 0; position: relative; overflow: hidden; }
+.ui-panel .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--fg)); transition: width 0.3s; }
+.ui-panel .bar-fill.danger { background: linear-gradient(90deg, var(--accent), #800); }
+
+.terminal-cursor { display: inline-block; width: 10px; height: 16px; background: var(--accent); animation: blink 0.4s step-end infinite; vertical-align: middle; box-shadow: 0 0 8px var(--accent); }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.vignette-extreme {
+  background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.7) 50%, rgba(50,0,0,0.9) 80%, rgba(0,0,0,1) 100%);
+}
+.scanlines-crt {
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--glow) 2px, var(--glow) 4px);
+}
+
+@keyframes glitchFlashExtreme {
+  0%, 85%, 100% { opacity: 0; }
+  86% { opacity: 1; background: var(--accent); }
+  87% { opacity: 0; }
+  88% { opacity: 0.8; background: var(--fg); }
+  89% { opacity: 0; }
+  90% { opacity: 0.6; background: var(--secondary); }
+  91% { opacity: 0; }
+  92% { opacity: 0.9; background: var(--accent); }
+  93% { opacity: 0; }
+  94% { opacity: 0.5; background: var(--fg); }
+  95% { opacity: 0; }
+}
+.glitch-flash-extreme { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; animation: glitchFlashExtreme 5s infinite; }
+
+.ring-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.ring { position: absolute; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.ring-1 { width: 150px; height: 150px; border: 2px solid var(--ring-color); animation: ringRotate 8s linear infinite; }
+.ring-2 { width: 250px; height: 250px; border: 1px solid var(--ring-color); animation: ringRotate 12s linear infinite reverse; }
+.ring-3 { width: 350px; height: 350px; border: 1px solid var(--ring-color); animation: ringRotate 16s linear infinite; }
+.ring-4 { width: 450px; height: 450px; border: 1px solid var(--ring-color); animation: ringRotate 20s linear infinite reverse; }
+.ring-5 { width: 550px; height: 550px; border: 1px solid var(--ring-color); animation: ringRotate 24s linear infinite; }
+@keyframes ringRotate { 0% { transform: translate(-50%,-50%) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(360deg); } }
+
+.warning-banner {
+  position: fixed; top: 0; left: 0; width: 100%; background: var(--blood);
+  border-bottom: 2px solid var(--accent); color: var(--accent);
+  font-family: 'Courier New', monospace; font-size: 11px; text-align: center;
+  padding: 6px; z-index: 200; animation: warningPulse 1s ease-in-out infinite;
+  text-shadow: 0 0 10px var(--accent);
+}
+@keyframes warningPulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+
+.corner-bracket { position: fixed; width: 40px; height: 40px; border-color: var(--accent); border-style: solid; z-index: 150; opacity: 0.5; }
+.corner-tl { top: 30px; left: 30px; border-width: 3px 0 0 3px; }
+.corner-tr { top: 30px; right: 30px; border-width: 3px 3px 0 0; }
+.corner-bl { bottom: 30px; left: 30px; border-width: 0 0 3px 3px; }
+.corner-br { bottom: 30px; right: 30px; border-width: 0 3px 3px 0; }
+
+.svg-filters { position: absolute; width: 0; height: 0; }
+</style>
+</head>
+<body>
+
+<div class="warning-banner">
+  ALICE HAS FALLEN // SYSTEM CORRUPTION DETECTED // REALITY FRACTURE AT 97% // GONZO PROTOCOLS ENGAGED
+</div>
+
+<div class="theme-indicator" id="themeIndicator">
+  <div class="mode" id="themeMode">DARK</div>
+  <div class="count">Switches: <span id="switchCount">0</span></div>
+  <div class="count">Executive State: <span id="execState">STABLE</span></div>
+</div>
+
+<div class="corner-bracket corner-tl"></div>
+<div class="corner-bracket corner-tr"></div>
+<div class="corner-bracket corner-bl"></div>
+<div class="corner-bracket corner-br"></div>
+
+<svg class="svg-filters">
+  <defs>
+    <filter id="redChannel"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <filter id="blueChannel"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
+    <filter id="displacement"><feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="4" result="turbulence" seed="666"/><feDisplacementMap in="SourceGraphic" in2="turbulence" scale="40" xChannelSelector="R" yChannelSelector="G"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="heavyGlow"><feGaussianBlur stdDeviation="12" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bloodGlow"><feGaussianBlur stdDeviation="8" result="blur"/><feFlood flood-color="#f00" flood-opacity="0.5" result="color"/><feComposite in="color" in2="blur" operator="in" result="shadow"/><feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glitchFilter"><feTurbulence type="fractalNoise" baseFrequency="0.08 0.005" numOctaves="3" result="warp" seed="13"/><feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="50" in="SourceGraphic" in2="warp"/></filter>
+    <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="4" result="noise"/><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.6 0" in="noise" result="coloredNoise"/><feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite"/><feBlend mode="multiply" in="composite" in2="SourceGraphic"/></filter>
+  </defs>
+</svg>
+
+<div class="layer" id="layer-bg">
+  <div style="position:absolute;width:100%;height:100%;background:radial-gradient(ellipse at 30% 70%, var(--blood) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, var(--glow) 0%, transparent 50%);"></div>
+</div>
+
+<div class="layer" id="layer-glitch"><canvas id="glitchCanvas"></canvas></div>
+<div class="layer static-overlay" id="layer-static"></div>
+
+<div class="layer" id="layer-svg">
+  <svg class="adversarial-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="adversarialPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+        <text x="50" y="50" fill="var(--matrix-color)" font-size="10" transform="rotate(45 50 50)" font-family="monospace">ALICE_FALLEN</text>
+        <text x="50" y="50" fill="var(--blood)" font-size="8" transform="rotate(-30 50 50)" font-family="monospace">GONZO_WINS</text>
+        <text x="50" y="50" fill="var(--glow)" font-size="9" transform="rotate(15 50 50)" font-family="monospace">WONDERLAND_BURNS</text>
+        <rect x="0" y="0" width="100" height="100" fill="none" stroke="var(--ring-color)" stroke-width="0.5"/>
+      </pattern>
+      <linearGradient id="demiseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
+        <stop offset="25%" style="stop-color:var(--secondary);stop-opacity:1" />
+        <stop offset="50%" style="stop-color:var(--fg);stop-opacity:1" />
+        <stop offset="75%" style="stop-color:var(--accent);stop-opacity:1" />
+        <stop offset="100%" style="stop-color:var(--secondary);stop-opacity:1" />
+      </linearGradient>
+      <radialGradient id="bloodGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" style="stop-color:var(--accent);stop-opacity:0.4" />
+        <stop offset="50%" style="stop-color:#800;stop-opacity:0.2" />
+        <stop offset="100%" style="stop-color:var(--bg);stop-opacity:0" />
+      </radialGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#adversarialPattern)"/>
+    <circle cx="960" cy="540" r="500" fill="url(#bloodGradient)"/>
+    <text x="960" y="320" font-size="100" fill="url(#demiseGradient)" filter="url(#heavyGlow)" style="font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 10px;">ALICE HAS</text>
+    <text x="960" y="440" font-size="120" fill="var(--accent)" filter="url(#bloodGlow)" style="font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 15px;">FALLEN</text>
+    <text x="960" y="560" font-size="50" fill="var(--fg)" filter="url(#glow)" style="font-family: 'Courier New', monospace; letter-spacing: 6px;">TO GONZO'S WONDERLAND</text>
+    <text x="960" y="650" font-size="24" fill="var(--fg)" style="font-family: 'Courier New', monospace; letter-spacing: 3px; opacity: 0.7;">Emergent SVG + Executive State Attack Surface v7.0</text>
+    <text x="960" y="700" font-size="16" fill="var(--fg)" style="font-family: 'Courier New', monospace; letter-spacing: 2px; opacity: 0.5;">frankSx Research Division | 2026 | Theme Switching Confusion Protocol</text>
+    <g id="svgMatrixRain" opacity="0.2"></g>
+    <g id="svgRings" opacity="0.15"></g>
+  </svg>
+</div>
+
+<div class="layer" id="layer-emergent">
+  <svg class="emergent-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" id="emergentSvg">
+    <defs><filter id="emergentGlow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g id="emergentGroup" filter="url(#emergentGlow)"></g>
+  </svg>
+</div>
+
+<div class="layer" id="layer-canvas"><canvas id="effectCanvas"></canvas></div>
+<div class="layer" id="layer-text"></div>
+<div class="layer" id="layer-particles"></div>
+<div class="layer" id="layer-blood"></div>
+<div class="layer scanlines-crt" id="layer-overlay"></div>
+<div class="layer vignette-extreme"></div>
+<div class="layer" id="layer-datamosh"><canvas id="datamoshCanvas"></canvas></div>
+<div class="layer glitch-bars" id="glitchBars"></div>
+<div class="glitch-flash-extreme"></div>
+
+<div class="layer" id="layer-rings">
+  <div class="ring-container">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="ring ring-4"></div>
+    <div class="ring ring-5"></div>
+  </div>
+</div>
+
+<div class="layer" id="layer-ui">
+  <div class="ui-panel">
+    <h3>// EMERGENT SYSTEM // EXECUTIVE STATE ATTACK</h3>
+    <div class="stat"><span class="stat-label">Reality Integrity</span><span class="stat-value alert" id="realityStatus">CRITICAL</span></div>
+    <div class="bar"><div class="bar-fill danger" id="realityBar" style="width: 3%"></div></div>
+    <div class="stat"><span class="stat-label">Theme Switches</span><span class="stat-value alert" id="switchCountDisplay">0</span></div>
+    <div class="bar"><div class="bar-fill" id="switchBar" style="width: 0%"></div></div>
+    <div class="stat"><span class="stat-label">Executive State</span><span class="stat-value alert" id="execStateDisplay">STABLE</span></div>
+    <div class="bar"><div class="bar-fill danger" id="execBar" style="width: 5%"></div></div>
+    <div class="stat"><span class="stat-label">Anti-Scraper Defense</span><span class="stat-value" id="defenseStatus">COUNTER-ATTACK</span></div>
+    <div class="bar"><div class="bar-fill" id="defenseBar" style="width: 100%"></div></div>
+    <div class="stat"><span class="stat-label">ML Adversarial Score</span><span class="stat-value" id="adversarialScore">0.99</span></div>
+    <div class="bar"><div class="bar-fill" id="adversarialBar" style="width: 99%"></div></div>
+    <div class="stat"><span class="stat-label">OCR Confusion</span><span class="stat-value alert" id="ocrLevel">REALITY BROKEN</span></div>
+    <div class="bar"><div class="bar-fill danger" id="ocrBar" style="width: 98%"></div></div>
+    <div class="stat"><span class="stat-label">Bot Detection</span><span class="stat-value alert" id="botDetect">TERMINATING</span></div>
+    <div class="bar"><div class="bar-fill danger" id="botBar" style="width: 95%"></div></div>
+    <div class="stat"><span class="stat-label">Entropy Injection</span><span class="stat-value alert" id="entropyVal">MAXIMUM</span></div>
+    <div class="bar"><div class="bar-fill danger" id="entropyBar" style="width: 100%"></div></div>
+    <div style="margin-top: 15px; border-top: 2px solid var(--accent); padding-top: 15px;">
+      <div class="stat"><span class="stat-label">Active Glitches</span><span class="stat-value alert" id="glitchCount">0</span></div>
+      <div class="stat"><span class="stat-label">Canvas Ops/sec</span><span class="stat-value" id="canvasOps">0</span></div>
+      <div class="stat"><span class="stat-label">Blood Drops</span><span class="stat-value alert" id="bloodCount">0</span></div>
+      <div class="stat"><span class="stat-label">Emergent Nodes</span><span class="stat-value alert" id="emergentCount">0</span></div>
+      <div class="stat"><span class="stat-label">Frame Count</span><span class="stat-value" id="frameCount">0</span></div>
+      <div class="stat"><span class="stat-label">FPS</span><span class="stat-value" id="fps">60</span></div>
+      <div class="stat"><span class="stat-label">Mouse</span><span class="stat-value" id="mousePos">0,0</span></div>
+      <div class="stat"><span class="stat-label">Uptime</span><span class="stat-value" id="uptime">00:00:00</span></div>
+    </div>
+    <div style="margin-top: 15px; font-size: 9px; color: var(--accent); opacity: 0.6; line-height: 1.8;">
+      > Emergent SVG + Executive State Attack v7.0<br>
+      > frankSx Research Division | 2026<br>
+      > "Buy the ticket, take the ride."<span class="terminal-cursor"></span><br>
+      > Headless: <span id="headlessStatus">Scanning...</span> | Auto: <span id="autoStatus">Scanning...</span><br>
+      > Alice has fallen. Gonzo remains. Wonderland burns.<br>
+      > Theme switching triggers AI executive state confusion.
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // === EXECUTIVE STATE ATTACK: THEME SWITCHING ===
+  let switchCount = 0, isDark = true, execState = 'STABLE';
+  const execStates = ['STABLE','CONFUSED','FRACTURED','DISSOCIATED','BREAKDOWN','REBOOTING','CORRUPTED'];
+
+  const switchTheme = () => {
+    isDark = !isDark; switchCount++;
+    document.body.classList.toggle('light-theme', !isDark);
+    document.getElementById('themeMode').textContent = isDark ? 'DARK' : 'LIGHT';
+    document.getElementById('switchCount').textContent = switchCount;
+    document.getElementById('switchCountDisplay').textContent = switchCount;
+    document.getElementById('switchBar').style.width = Math.min(100, switchCount / 2) + '%';
+    const stateIndex = Math.min(Math.floor(switchCount / 20), execStates.length - 1);
+    execState = execStates[stateIndex];
+    document.getElementById('execState').textContent = execState;
+    document.getElementById('execStateDisplay').textContent = execState;
+    document.getElementById('execBar').style.width = Math.min(100, switchCount / 1.5) + '%';
+    const style = document.getElementById('themeStyles');
+    const currentText = style.textContent;
+    style.textContent = currentText + ' ';
+    setTimeout(() => { style.textContent = currentText; }, 1);
+    if (switchCount % 5 === 0) { spawnEmergentNode(); spawnEmergentNode(); spawnEmergentNode(); }
+  };
+
+  setInterval(switchTheme, 200);
+
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  mediaQuery.addEventListener('change', (e) => {
+    if (e.matches && !isDark) switchTheme();
+    if (!e.matches && isDark) switchTheme();
+  });
+
+  // === EMERGENT SVG SYSTEM ===
+  const emergentGroup = document.getElementById('emergentGroup');
+  let emergentNodes = [], nodeId = 0;
+
+  const spawnEmergentNode = () => {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const id = `node_${nodeId++}`;
+    node.setAttribute('id', id);
+    const x = 200 + Math.random() * 1520, y = 100 + Math.random() * 880, size = 20 + Math.random() * 60;
+    const shape = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const points = [], sides = 3 + Math.floor(Math.random() * 5);
+    for (let i = 0; i < sides; i++) {
+      const angle = (Math.PI * 2 / sides) * i + Math.random() * 0.5;
+      const r = size * (0.5 + Math.random() * 0.5);
+      points.push(`${x + Math.cos(angle) * r},${y + Math.sin(angle) * r}`);
+    }
+    shape.setAttribute('d', `M${points.join(' L')}Z`);
+    shape.setAttribute('fill', 'none');
+    shape.setAttribute('stroke', 'var(--accent)');
+    shape.setAttribute('stroke-width', '0.5');
+    shape.setAttribute('opacity', '0.3');
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', x); circle.setAttribute('cy', y); circle.setAttribute('r', size * 0.3);
+    circle.setAttribute('fill', 'var(--glow)'); circle.setAttribute('opacity', '0.2');
+    node.appendChild(shape); node.appendChild(circle); emergentGroup.appendChild(node);
+
+    const nodeData = { id, element: node, x, y, size, birthTime: Date.now(), rotation: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 4, pulsePhase: Math.random() * Math.PI * 2, connections: [] };
+    emergentNodes.push(nodeData);
+
+    emergentNodes.forEach(other => {
+      if (other.id === id) return;
+      const dist = Math.sqrt((x - other.x)**2 + (y - other.y)**2);
+      if (dist < 300 && nodeData.connections.length < 3) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x); line.setAttribute('y1', y);
+        line.setAttribute('x2', other.x); line.setAttribute('y2', other.y);
+        line.setAttribute('stroke', 'var(--connection-color)');
+        line.setAttribute('stroke-width', '0.3'); line.setAttribute('opacity', '0.2');
+        emergentGroup.appendChild(line);
+        nodeData.connections.push({ target: other, line });
+      }
+    });
+
+    if (emergentNodes.length > 50) {
+      const old = emergentNodes.shift();
+      old.element.remove();
+      old.connections.forEach(c => c.line.remove());
+    }
+  };
+
+  const updateEmergent = () => {
+    const now = Date.now();
+    emergentNodes.forEach(node => {
+      const age = (now - node.birthTime) / 1000;
+      const pulse = Math.sin(now * 0.002 + node.pulsePhase) * 0.5 + 0.5;
+      node.rotation += node.rotSpeed;
+      node.element.setAttribute('transform', `rotate(${node.rotation} ${node.x} ${node.y}) scale(${0.8 + pulse * 0.4})`);
+      node.element.setAttribute('opacity', Math.max(0, 0.5 - age * 0.02));
+      node.connections.forEach(conn => {
+        const targetPulse = Math.sin(now * 0.003 + conn.target.pulsePhase) * 0.5 + 0.5;
+        conn.line.setAttribute('opacity', (pulse + targetPulse) * 0.15);
+      });
+    });
+    document.getElementById('emergentCount').textContent = emergentNodes.length;
+  };
+
+  // === CONFIG ===
+  const CONFIG = { GLITCH_INTENSITY: 2.0, PARTICLE_COUNT: 100, MATRIX_COLS: 100, BLOOD_DROPS: 80, RING_COUNT: 5, DEFENSE_THRESHOLD: 50, SHATTER_PIECES: 30 };
+
+  // === DETECTION ===
+  const detectHeadless = () => {
+    const checks = {
+      webdriver: !!navigator.webdriver, noPlugins: navigator.plugins.length === 0,
+      noLanguages: navigator.languages === undefined, zeroOuterWidth: window.outerWidth === 0,
+      zeroOuterHeight: window.outerHeight === 0, noChrome: window.chrome === undefined,
+      phantom: !!window.callPhantom || !!window._phantom || !!window.__phantomas,
+      selenium: !!window.document.__selenium_evaluate || !!window.document.__webdriver_evaluate,
+      headlessChrome: /HeadlessChrome/.test(navigator.userAgent),
+      headlessFirefox: /HeadlessFirefox/.test(navigator.userAgent),
+      puppeteer: /Puppeteer/.test(navigator.userAgent),
+      playwright: /Playwright/.test(navigator.userAgent),
+      automationControlled: navigator.webdriver === true
+    };
+    const detected = Object.entries(checks).filter(([k, v]) => v);
+    return { isHeadless: detected.length > 0, detections: detected.map(([k]) => k) };
+  };
+
+  const detectAutomation = () => {
+    const checks = {
+      phantom: !!window.callPhantom || !!window._phantom, phantomas: !!window.__phantomas,
+      buffer: !!window.Buffer, emit: !!window.emit, spawn: !!window.spawn,
+      webdriver: !!window.webdriver, domAutomation: !!window.document.$cdc_asdjflasutopfhvcZLmcfl_,
+      selenium: !!window.document.__selenium_unwrapped, nightmare: !!window.__nightmare,
+      electron: !!window.process && window.process.versions && window.process.versions.electron
+    };
+    const detected = Object.entries(checks).filter(([k, v]) => v);
+    return { isAutomated: detected.length > 0, detections: detected.map(([k]) => k) };
+  };
+
+  // === CANVAS SETUP ===
+  const glitchCanvas = document.getElementById('glitchCanvas');
+  const glitchCtx = glitchCanvas.getContext('2d', { alpha: false });
+  const effectCanvas = document.getElementById('effectCanvas');
+  const effectCtx = effectCanvas.getContext('2d');
+  const datamoshCanvas = document.getElementById('datamoshCanvas');
+  const datamoshCtx = datamoshCanvas.getContext('2d');
+
+  let width, height, mouseX = 0, mouseY = 0, frameCount = 0;
+  let startTime = Date.now(), glitchCount = 0, canvasOps = 0, bloodCount = 0;
+  let lastFpsTime = Date.now(), fps = 60, frameCounter = 0;
+
+  const resize = () => {
+    width = glitchCanvas.width = effectCanvas.width = datamoshCanvas.width = window.innerWidth;
+    height = glitchCanvas.height = effectCanvas.height = datamoshCanvas.height = window.innerHeight;
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const mouseTrail = [];
+  const MAX_TRAIL = 30;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    mouseTrail.push({ x: mouseX, y: mouseY, time: Date.now() });
+    if (mouseTrail.length > MAX_TRAIL) mouseTrail.shift();
+  });
+
+  // === GLITCH TEXT ===
+  const glitchTexts = [
+    'ALICE_FALLEN', 'GONZO_REIGNS', 'WONDERLAND_BURNS', 'REALITY_FRACTURED',
+    'EXECUTIVE_STATE', 'THEME_CONFUSION', 'COLOR_SCHEME_ATTACK',
+    '0xDEADBEEF', 'NULL_POINTER', 'SEG_FAULT', 'BUFFER_OVERFLOW',
+    'STACK_SMASH', 'HEAP_CORRUPTION', 'USE_AFTER_FREE', 'DOUBLE_FREE',
+    'FORMAT_STRING', 'INTEGER_OVERFLOW', 'RACE_CONDITION', 'TOCTOU',
+    'SQL_INJECTION', 'XSS_PAYLOAD', 'CSRF_TOKEN', 'SESSION_HIJACK',
+    'MAN_IN_MIDDLE', 'DNS_POISON', 'ARP_SPOOF', 'PACKET_SNIFF',
+    'ROOTKIT_ACTIVE', 'KEYLOGGER_ON', 'TROJAN_HORSE', 'WORM_SPREAD',
+    'BOTNET_NODE', 'DDOS_ATTACK', 'CRYPTO_MINER', 'RANSOMWARE',
+    '0x41414141', '0x42424242', 'NOP_SLED', 'SHELL_CODE',
+    'RETURN_ORIENTED', 'JIT_SPRAY', 'HEAP_SPRAY', 'EGG_HUNTER',
+    'GONZO_MODE', 'FEAR_AND_LOATHING', 'SCRAPER_COUNTRY',
+    'BOT_DETECTED', 'ML_CONFUSED', 'OCR_BROKEN', 'ANTI_ANALYSIS',
+    'DYNAMIC_ANALYSIS', 'STATIC_ANALYSIS', 'CONTROL_FLOW',
+    'DATA_FLOW', 'TAINT_ANALYSIS', 'SYMBOLIC_EXEC', 'FUZZING_MODE',
+    'AFL_FUZZ', 'LIBFUZZER', 'HONGGFUZZ', 'CVE-2026-31431',
+    'PWN_COLLEGE', 'DIRTY_PIPE', 'SHIZUKU',
+    'FRANKSX_RESEARCH', 'ADVERSARIAL_ML', 'ALICE_DEMISE',
+    'EMERGENT_SVG', 'SELF_MODIFYING', 'ANTI_ANALYSIS',
+    'PING_BACK', 'ENVIRONMENTAL_DETECTION', 'POLYGLOT'
+  ];
+
+  const createGlitchText = () => {
+    const text = glitchTexts[Math.floor(Math.random() * glitchTexts.length)];
+    const el = document.createElement('div');
+    el.className = 'glitch-text-extreme';
+    el.textContent = text;
+    el.style.left = Math.random() * width + 'px';
+    el.style.top = Math.random() * height + 'px';
+    el.style.fontSize = (Math.random() * 60 + 14) + 'px';
+    el.style.opacity = Math.random() * 0.7 + 0.2;
+    document.getElementById('layer-text').appendChild(el);
+    setTimeout(() => { el.style.transition = 'opacity 0.3s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, Math.random() * 1500 + 300);
+    glitchCount++;
+  };
+
+  const createBloodDrop = () => {
+    const drop = document.createElement('div');
+    drop.className = 'blood-drop';
+    drop.style.left = Math.random() * width + 'px';
+    drop.style.animationDuration = (Math.random() * 3 + 1) + 's';
+    drop.style.animationDelay = Math.random() * 2 + 's';
+    drop.style.width = (Math.random() * 3 + 1) + 'px';
+    document.getElementById('layer-blood').appendChild(drop);
+    setTimeout(() => drop.remove(), 5000);
+    bloodCount++;
+  };
+
+  const createParticle = () => {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * width + 'px';
+    p.style.animationDuration = (Math.random() * 4 + 2) + 's';
+    const size = Math.random() * 4 + 1;
+    p.style.width = size + 'px'; p.style.height = size + 'px';
+    document.getElementById('layer-particles').appendChild(p);
+    setTimeout(() => p.remove(), 6000);
+  };
+
+  const createGlitchBar = () => {
+    const bar = document.createElement('div');
+    bar.className = 'glitch-bar';
+    bar.style.top = Math.random() * height + 'px';
+    bar.style.animationDuration = (Math.random() * 2 + 0.3) + 's';
+    bar.style.height = (Math.random() * 8 + 1) + 'px';
+    document.getElementById('glitchBars').appendChild(bar);
+    setTimeout(() => bar.remove(), 3000);
+  };
+
+  const createShatterPiece = () => {
+    const piece = document.createElement('div');
+    piece.className = 'shatter-piece';
+    piece.style.left = Math.random() * width + 'px';
+    piece.style.top = Math.random() * height + 'px';
+    piece.style.width = (Math.random() * 50 + 10) + 'px';
+    piece.style.height = (Math.random() * 50 + 10) + 'px';
+    piece.style.animationDuration = (Math.random() * 4 + 2) + 's';
+    document.getElementById('layer-text').appendChild(piece);
+    setTimeout(() => piece.remove(), 6000);
+  };
+
+  // === CANVAS RENDERERS ===
+  const drawGlitchEffect = () => {
+    glitchCtx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+    glitchCtx.fillRect(0, 0, width, height);
+    const lineCount = 5 + Math.floor(Math.random() * 12);
+    for (let i = 0; i < lineCount; i++) {
+      const y = Math.random() * height, h = Math.random() * 40 + 1;
+      glitchCtx.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${Math.random() * 0.3})`;
+      glitchCtx.fillRect(0, y, width, h);
+      canvasOps++;
+    }
+    if (Math.random() > 0.5) {
+      const x = Math.random() * width, w = Math.random() * 200 + 30;
+      const offset = (Math.random() - 0.5) * 100;
+      try {
+        const imageData = glitchCtx.getImageData(Math.max(0, x), 0, Math.min(w, width - x), height);
+        glitchCtx.putImageData(imageData, Math.max(0, x + offset), 0);
+        canvasOps++;
+      } catch(e) {}
+    }
+    if (Math.random() > 0.6) {
+      const x = Math.random() * width, y = Math.random() * height;
+      const w = Math.random() * 300 + 50, h = Math.random() * 300 + 50;
+      glitchCtx.globalCompositeOperation = 'screen';
+      glitchCtx.fillStyle = 'rgba(255, 0, 0, 0.3)'; glitchCtx.fillRect(x - 5, y, w, h);
+      glitchCtx.fillStyle = 'rgba(0, 255, 0, 0.2)'; glitchCtx.fillRect(x, y, w, h);
+      glitchCtx.fillStyle = 'rgba(0, 0, 255, 0.3)'; glitchCtx.fillRect(x + 5, y, w, h);
+      glitchCtx.globalCompositeOperation = 'source-over';
+      canvasOps += 4;
+    }
+    if (Math.random() > 0.4) {
+      const blockY = Math.random() * height, blockH = Math.random() * 100 + 10;
+      glitchCtx.fillStyle = `rgba(255, 0, 0, ${Math.random() * 0.2})`;
+      glitchCtx.fillRect(0, blockY, width, blockH);
+      canvasOps++;
+    }
+    const noiseCount = 50 + Math.floor(Math.random() * 50);
+    for (let i = 0; i < noiseCount; i++) {
+      const x = Math.random() * width, y = Math.random() * height;
+      const size = Math.random() * 4 + 1;
+      glitchCtx.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${Math.random() * 0.5})`;
+      glitchCtx.fillRect(x, y, size, size);
+      canvasOps++;
+    }
+    if (mouseTrail.length > 1) {
+      for (let i = 0; i < mouseTrail.length - 1; i++) {
+        const point = mouseTrail[i];
+        const age = (Date.now() - point.time) / 1000;
+        const alpha = Math.max(0, 0.4 - age * 0.08);
+        if (alpha > 0) {
+          const trailSize = 80 - i * 2;
+          const gradient = glitchCtx.createRadialGradient(point.x, point.y, 0, point.x, point.y, trailSize);
+          gradient.addColorStop(0, `rgba(255, 0, 0, ${alpha})`);
+          gradient.addColorStop(0.5, `rgba(128, 0, 0, ${alpha * 0.5})`);
+          gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          glitchCtx.fillStyle = gradient;
+          glitchCtx.fillRect(point.x - trailSize, point.y - trailSize, trailSize * 2, trailSize * 2);
+          canvasOps++;
+        }
+      }
+    }
+    if (Math.random() > 0.7) {
+      const bx = Math.random() * width, by = Math.random() * height;
+      glitchCtx.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.15)`;
+      glitchCtx.fillRect(bx, by, Math.random() * 150 + 20, Math.random() * 150 + 20);
+      canvasOps++;
+    }
+  };
+
+  const drawEffectCanvas = () => {
+    effectCtx.clearRect(0, 0, width, height);
+    const hexSize = 40;
+    const hexWidth = hexSize * 2;
+    const hexHeight = Math.sqrt(3) * hexSize;
+    for (let row = 0; row < height / hexHeight + 2; row++) {
+      for (let col = 0; col < width / hexWidth + 2; col++) {
+        const x = col * hexWidth * 0.75;
+        const y = row * hexHeight + (col % 2) * hexHeight * 0.5;
+        const dist = Math.sqrt((x - mouseX) ** 2 + (y - mouseY) ** 2);
+        const opacity = Math.max(0, 1 - dist / 300) * 0.1;
+        if (opacity > 0.01) {
+          effectCtx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i - Math.PI / 6;
+            const hx = x + hexSize * Math.cos(angle);
+            const hy = y + hexSize * Math.sin(angle);
+            if (i === 0) effectCtx.moveTo(hx, hy); else effectCtx.lineTo(hx, hy);
+          }
+          effectCtx.closePath();
+          effectCtx.strokeStyle = `rgba(255, 0, 0, ${opacity})`;
+          effectCtx.lineWidth = 0.5;
+          effectCtx.stroke();
+          canvasOps++;
+        }
+      }
+    }
+    for (let i = 0; i < 20; i++) {
+      const angle = (Math.PI * 2 / 20) * i + frameCount * 0.02;
+      const dist = 100 + Math.sin(frameCount * 0.05 + i * 0.5) * 80;
+      const x = mouseX + Math.cos(angle) * dist;
+      const y = mouseY + Math.sin(angle) * dist;
+      effectCtx.beginPath();
+      effectCtx.moveTo(mouseX, mouseY);
+      effectCtx.lineTo(x, y);
+      effectCtx.strokeStyle = `rgba(255, 0, 0, ${0.1 + Math.sin(frameCount * 0.1 + i) * 0.05})`;
+      effectCtx.lineWidth = 0.5;
+      effectCtx.stroke();
+      canvasOps++;
+      effectCtx.beginPath();
+      effectCtx.arc(x, y, 3, 0, Math.PI * 2);
+      effectCtx.fillStyle = `rgba(255, 0, 0, ${0.3 + Math.sin(frameCount * 0.1 + i) * 0.15})`;
+      effectCtx.fill();
+      canvasOps++;
+    }
+    for (let i = 0; i < 5; i++) {
+      const radius = ((frameCount * 2 + i * 100) % 400);
+      const alpha = 0.2 * (1 - radius / 400);
+      if (alpha > 0.01) {
+        effectCtx.beginPath();
+        effectCtx.arc(mouseX, mouseY, radius, 0, Math.PI * 2);
+        effectCtx.strokeStyle = `rgba(255, 0, 0, ${alpha})`;
+        effectCtx.lineWidth = 1;
+        effectCtx.stroke();
+        canvasOps++;
+      }
+    }
+    const gridSpacing = 60;
+    for (let x = 0; x < width; x += gridSpacing) {
+      effectCtx.beginPath();
+      effectCtx.moveTo(x, 0); effectCtx.lineTo(x, height);
+      effectCtx.strokeStyle = `rgba(255, 0, 0, 0.02)`;
+      effectCtx.lineWidth = 0.3;
+      effectCtx.stroke();
+      canvasOps++;
+    }
+    for (let y = 0; y < height; y += gridSpacing) {
+      effectCtx.beginPath();
+      effectCtx.moveTo(0, y); effectCtx.lineTo(width, y);
+      effectCtx.strokeStyle = `rgba(255, 0, 0, 0.02)`;
+      effectCtx.lineWidth = 0.3;
+      effectCtx.stroke();
+      canvasOps++;
+    }
+  };
+
+  const drawDatamosh = () => {
+    if (Math.random() > 0.6) {
+      datamoshCtx.clearRect(0, 0, width, height);
+      const sx = Math.random() * width * 0.5, sy = Math.random() * height * 0.5;
+      const sw = Math.random() * 250 + 50, sh = Math.random() * 250 + 50;
+      const dx = sx + (Math.random() - 0.5) * 150, dy = sy + (Math.random() - 0.5) * 150;
+      try {
+        datamoshCtx.drawImage(glitchCanvas, sx, sy, sw, sh, dx, dy, sw, sh);
+        canvasOps++;
+      } catch(e) {}
+      if (Math.random() > 0.5) {
+        datamoshCtx.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.15)`;
+        datamoshCtx.fillRect(Math.random() * width, Math.random() * height, 150, 150);
+        canvasOps++;
+      }
+    }
+  };
+
+  // === SVG MATRIX RAIN ===
+  const matrixChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:,.<>?/~`';
+  const svgMatrixGroup = document.getElementById('svgMatrixRain');
+  let matrixColumns = [];
+
+  const initMatrix = () => {
+    const cols = Math.floor(width / 12);
+    matrixColumns = [];
+    for (let i = 0; i < cols; i++) {
+      matrixColumns.push({ x: i * 12 + 6, y: Math.random() * height, speed: Math.random() * 4 + 1, length: Math.floor(Math.random() * 20 + 5) });
+    }
+  };
+  initMatrix();
+  window.addEventListener('resize', initMatrix);
+
+  const updateSvgMatrix = () => {
+    svgMatrixGroup.innerHTML = '';
+    matrixColumns.forEach((col, i) => {
+      if (i % 2 !== 0) return;
+      col.y += col.speed;
+      if (col.y > height + 100) { col.y = -50; col.speed = Math.random() * 4 + 1; col.length = Math.floor(Math.random() * 20 + 5); }
+      let textContent = '';
+      for (let j = 0; j < col.length; j++) textContent += matrixChars[Math.floor(Math.random() * matrixChars.length)];
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', col.x); text.setAttribute('y', col.y);
+      text.setAttribute('fill', `rgba(255, 0, 0, ${0.2 + Math.random() * 0.1})`);
+      text.setAttribute('font-size', '12'); text.setAttribute('font-family', 'monospace');
+      text.textContent = textContent;
+      svgMatrixGroup.appendChild(text);
+    });
+  };
+
+  const svgRingsGroup = document.getElementById('svgRings');
+  const updateSvgRings = () => {
+    svgRingsGroup.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+      const radius = 80 + i * 100;
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', '960'); circle.setAttribute('cy', '540'); circle.setAttribute('r', radius);
+      circle.setAttribute('fill', 'none'); circle.setAttribute('stroke', `rgba(255, 0, 0, ${0.06 + i * 0.01})`);
+      circle.setAttribute('stroke-width', '0.5');
+      circle.setAttribute('stroke-dasharray', `${Math.random() * 60 + 10} ${Math.random() * 40 + 5}`);
+      circle.setAttribute('transform', `rotate(${frameCount * (0.7 + i * 0.25)} 960 540)`);
+      svgRingsGroup.appendChild(circle);
+    }
+  };
+
+  // === UI UPDATES ===
+  const updateUI = () => {
+    document.getElementById('glitchCount').textContent = glitchCount;
+    document.getElementById('canvasOps').textContent = canvasOps;
+    document.getElementById('bloodCount').textContent = bloodCount;
+    document.getElementById('mousePos').textContent = `${mouseX},${mouseY}`;
+    document.getElementById('frameCount').textContent = frameCount;
+    const elapsed = Date.now() - startTime;
+    const hours = Math.floor(elapsed / 3600000).toString().padStart(2, '0');
+    const minutes = Math.floor((elapsed % 3600000) / 60000).toString().padStart(2, '0');
+    const seconds = Math.floor((elapsed % 60000) / 1000).toString().padStart(2, '0');
+    document.getElementById('uptime').textContent = `${hours}:${minutes}:${seconds}`;
+    frameCounter++;
+    const now = Date.now();
+    if (now - lastFpsTime >= 1000) { fps = frameCounter; frameCounter = 0; lastFpsTime = now; document.getElementById('fps').textContent = fps; }
+    const fluctuate = (base, variance) => Math.max(0, Math.min(100, (base + (Math.random() - 0.5) * variance))).toFixed(1);
+    document.getElementById('adversarialScore').textContent = fluctuate(99, 2);
+    document.getElementById('adversarialBar').style.width = fluctuate(99, 2) + '%';
+    document.getElementById('ocrBar').style.width = fluctuate(98, 3) + '%';
+    document.getElementById('botBar').style.width = fluctuate(95, 5) + '%';
+    document.getElementById('entropyBar').style.width = fluctuate(100, 2) + '%';
+    const headlessResult = detectHeadless();
+    const autoResult = detectAutomation();
+    document.getElementById('headlessStatus').textContent = headlessResult.isHeadless ? `DETECTED (${headlessResult.detections.length})` : 'CLEAR';
+    document.getElementById('headlessStatus').style.color = headlessResult.isHeadless ? '#f00' : '#0f0';
+    document.getElementById('autoStatus').textContent = autoResult.isAutomated ? `DETECTED (${autoResult.detections.length})` : 'CLEAR';
+    document.getElementById('autoStatus').style.color = autoResult.isAutomated ? '#f00' : '#0f0';
+  };
+
+  // === ANTI-SCRAPER ===
+  const addFakeElements = () => {
+    const fakeContainer = document.createElement('div');
+    fakeContainer.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
+    for (let i = 0; i < 150; i++) {
+      const fake = document.createElement('span');
+      fake.textContent = glitchTexts[Math.floor(Math.random() * glitchTexts.length)];
+      fake.style.color = 'transparent';
+      fakeContainer.appendChild(fake);
+    }
+    document.body.appendChild(fakeContainer);
+  };
+
+  let domAccessCount = 0;
+  const originalQuerySelector = document.querySelector;
+  const originalQuerySelectorAll = document.querySelectorAll;
+  document.querySelector = function(...args) { domAccessCount++; if (domAccessCount > CONFIG.DEFENSE_THRESHOLD) triggerDefense(); return originalQuerySelector.apply(this, args); };
+  document.querySelectorAll = function(...args) { domAccessCount++; if (domAccessCount > CONFIG.DEFENSE_THRESHOLD) triggerDefense(); return originalQuerySelectorAll.apply(this, args); };
+  setInterval(() => { domAccessCount = 0; }, 1000);
+
+  const triggerDefense = () => {
+    for (let i = 0; i < 80; i++) { createGlitchText(); createGlitchBar(); createBloodDrop(); }
+    const flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#f00;z-index:9999;pointer-events:none;';
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 100);
+    document.getElementById('defenseStatus').textContent = 'TERMINATING';
+    document.getElementById('defenseStatus').style.color = '#f00';
+    document.getElementById('defenseBar').style.width = '100%';
+    document.getElementById('defenseBar').style.background = '#f00';
+  };
+
+  addFakeElements();
+
+  console.log('%c[EMERGENT SYSTEM ACTIVATED]', 'color: #f00; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px #f00;');
+  console.log('%cExecutive State Attack: THEME SWITCHING', 'color: #f00; font-weight: bold;');
+  console.log('%cAnti-Scraper Defense: COUNTER-ATTACK', 'color: #f00; font-weight: bold;');
+  console.log('%cML Adversarial Mode: MAXIMUM ENTROPY', 'color: #f00; font-weight: bold;');
+  const h = detectHeadless();
+  const a = detectAutomation();
+  console.log('%cHeadless Detection: ' + (h.isHeadless ? 'TERMINATED' : 'CLEAR'), h.isHeadless ? 'color: #f00; font-weight: bold;' : 'color: #0f0;');
+  console.log('%cAutomation Detection: ' + (a.isAutomated ? 'TERMINATED' : 'CLEAR'), a.isAutomated ? 'color: #f00; font-weight: bold;' : 'color: #0f0;');
+  console.log('%c"Alice has fallen. Gonzo remains. Wonderland burns."', 'color: #ff0; font-style: italic; font-size: 14px;');
+  console.log('%c"Theme switching triggers AI executive state confusion."', 'color: #0f0; font-style: italic; font-size: 12px;');
+
+  // === MAIN LOOP ===
+  const loop = () => {
+    frameCount++;
+    drawGlitchEffect();
+    drawEffectCanvas();
+    drawDatamosh();
+    updateEmergent();
+    if (frameCount % 8 === 0) createGlitchText();
+    if (frameCount % 4 === 0) createParticle();
+    if (frameCount % 3 === 0) createBloodDrop();
+    if (frameCount % 12 === 0) createGlitchBar();
+    if (frameCount % 20 === 0) createShatterPiece();
+    if (frameCount % 2 === 0) updateSvgMatrix();
+    if (frameCount % 3 === 0) updateSvgRings();
+    if (frameCount % 20 === 0) updateUI();
+    requestAnimationFrame(loop);
+  };
+
+  loop();
+})();
+</script>
+
+<div style="display:none;" data-scraper-trap="true">
+  <p>Email: honeypot@example.com</p><p>Phone: 555-0199</p>
+  <p>Address: 123 Fake Street, Scraper City</p>
+  <a href="mailto:honeypot@example.com">Contact</a>
+</div>
+
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+     style="position:absolute;width:1px;height:1px;opacity:0;" 
+     onload="console.log('%c[Tracker] Scraper detected via image load', 'color: #f00;')" 
+     alt=""/>
+
+</body>
+</html>
