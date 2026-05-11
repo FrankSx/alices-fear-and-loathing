@@ -29,7 +29,7 @@ As the theme switches, the AI's "executive state" (its high-level decision-makin
 Simply open `alices_fear_and_loathing.html` in any modern browser. No build step. No dependencies. No server required.
 
 ```bash
-git clone https://github.com/yourusername/alices-fear-and-loathing.git
+git clone https://github.com/FrankSx/alices-fear-and-loathing.git
 cd alices-fear-and-loathing
 open alices_fear_and_loathing.html
 ```
